@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Image Diversity Study</title>
+<meta name="robots" content="noindex">
+<!--
+  Stable entry point for the study.
+
+  Why this file exists: the study runs on a compute node behind a tunnel, and a
+  Cloudflare *quick* tunnel gets a new random hostname every time it restarts. Handing
+  that hostname straight to Prolific means one restart orphans every participant's
+  link. This page is the one URL participants ever see; when the tunnel renames itself
+  you change the single line below and their links keep working.
+
+      https://simran-khanuja.github.io/t2i-diversity/        <- give Prolific this
+
+  To point it somewhere new:
+      python human_study/serve/update_redirect.py https://<new-host>/pilotB/
+      git add docs/index.html && git commit -m "Point study link at the new tunnel"
+      git push
+  GitHub Pages redeploys in ~1 minute.
+
+  Query strings are forwarded, so Prolific's ?PROLIFIC_PID=...&STUDY_ID=... survives
+  the hop and still reaches the app.
+-->
+<script>
+  // ---- the only line to edit -------------------------------------------------
+  var TARGET = "https://issue-ladies-incidence-breed.trycloudflare.com/pilotB/";
+  // ----------------------------------------------------------------------------
+  var dest = TARGET + (window.location.search || "") + (window.location.hash || "");
+  window.location.replace(dest);
+</script>
+<style>
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+       background:#f5f6f8;color:#1a1c22;display:flex;min-height:100vh;margin:0;
+       align-items:center;justify-content:center;padding:24px;line-height:1.6}
+  .card{background:#fff;border:1px solid #e3e5ea;border-radius:14px;padding:32px 36px;
+        max-width:460px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+  h1{font-size:20px;margin:0 0 10px}
+  p{margin:0 0 14px;color:#4a5060}
+  a{color:#3b6fe0}
+  .muted{font-size:13.5px;color:#7a8090}
+  @media (prefers-color-scheme:dark){
+    body{background:#0f1117;color:#e8eaf0}
+    .card{background:#171a21;border-color:#262b36;box-shadow:none}
+    p{color:#aeb4c2} .muted{color:#7b8292} a{color:#8faae6}
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>Taking you to the study…</h1>
+    <p>If nothing happens in a few seconds,
+       <a id="manual" href="#">open the study here</a>.</p>
+    <p class="muted">If that link does not load, the study is briefly offline. Please
+       return to Prolific and try again shortly — your progress is saved.</p>
+  </div>
+  <script>
+    document.getElementById("manual").href = dest;
+  </script>
+</body>
+</html>
