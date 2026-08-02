@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Pilot views — axis-free diversity</title>
+<style>
+  :root{
+    --bg:#fbfaf8; --panel:#fff; --ink:#1c1b19; --muted:#6b675f; --line:#e3dfd8;
+    --accent:#3f6b5c; --accent-soft:#eaf1ed;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#14150f; --panel:#1c1e17; --ink:#eceade; --muted:#9c9a8c; --line:#2e3128;
+           --accent:#8fc0ac; --accent-soft:#22291f; }
+  }
+  :root[data-theme="dark"]{ --bg:#14150f; --panel:#1c1e17; --ink:#eceade; --muted:#9c9a8c;
+    --line:#2e3128; --accent:#8fc0ac; --accent-soft:#22291f; }
+  :root[data-theme="light"]{ --bg:#fbfaf8; --panel:#fff; --ink:#1c1b19; --muted:#6b675f;
+    --line:#e3dfd8; --accent:#3f6b5c; --accent-soft:#eaf1ed; }
+
+  body{background:var(--bg);color:var(--ink);
+       font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+       margin:0;padding:4rem 1.5rem 6rem;}
+  main{max-width:46rem;margin:0 auto;display:flex;flex-direction:column;gap:2.5rem;}
+  h1{font-size:1.6rem;line-height:1.25;margin:0;text-wrap:balance;letter-spacing:-.01em;}
+  .lede{color:var(--muted);margin:.5rem 0 0;max-width:34rem;}
+  h2{font-size:.75rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);
+     margin:0 0 .75rem;font-weight:600;}
+  .list{display:flex;flex-direction:column;gap:.5rem;}
+  a.row{display:flex;align-items:baseline;gap:.75rem;text-decoration:none;color:inherit;
+        background:var(--panel);border:1px solid var(--line);border-radius:8px;
+        padding:.85rem 1rem;transition:border-color .12s,background .12s;}
+  a.row:hover,a.row:focus-visible{border-color:var(--accent);background:var(--accent-soft);}
+  a.row:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .name{font-weight:600;}
+  .meta{margin-left:auto;color:var(--muted);font-size:.85rem;
+        font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .note{color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:1.25rem;}
+  code{font:.85em ui-monospace,SFMono-Regular,Menlo,monospace;
+       background:var(--accent-soft);padding:.1em .35em;border-radius:4px;}
+</style>
+</head>
+<body>
+<main>
+  <div>
+    <h1>Pilot Phase B — axis-free diversity methods</h1>
+    <p class="lede">Static views of the pilot run: what four generation methods produced
+    for the same 14 prompts, and what raters said was missing from each image set.</p>
+  </div>
+
+  <section>
+    <h2>Method galleries — one page per model</h2>
+    <div class="list">
+      <a class="row" href="pilot_methods_flux1-dev.html"><span class="name">FLUX.1 dev</span><span class="meta">5.7 MB</span></a>
+      <a class="row" href="pilot_methods_flux2klein-base-9b.html"><span class="name">FLUX.2 Klein base 9B</span><span class="meta">5.5 MB</span></a>
+      <a class="row" href="pilot_methods_qwen-image-2512.html"><span class="name">Qwen-Image 2512</span><span class="meta">4.6 MB</span></a>
+      <a class="row" href="pilot_methods_sd35-large.html"><span class="name">SD 3.5 Large</span><span class="meta">8.5 MB</span></a>
+      <a class="row" href="pilot_methods_sd35-medium.html"><span class="name">SD 3.5 Medium</span><span class="meta">7.2 MB</span></a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Rater responses</h2>
+    <div class="list">
+      <a class="row" href="pilot_b_view.html"><span class="name">Pilot B — free-text axis responses</span><span class="meta">11 raters · 149 screens</span></a>
+    </div>
+  </section>
+
+  <p class="note">Each gallery shows 14 prompts &times; 4 methods &times; 4 samples at 512&nbsp;px.
+  Rater identifiers are replaced with <code>R01</code>&ndash;<code>R11</code>.</p>
+</main>
+</body>
+</html>
