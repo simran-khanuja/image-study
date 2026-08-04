@@ -71,8 +71,11 @@
       <a class="row" href="pilot_methods_flux2klein-base-9b.html"><span class="name">FLUX.2 Klein base 9B</span><span class="meta">scored &middot; 5.4 MB</span></a>
       <a class="row" href="pilot_methods_sd35-large.html"><span class="name">SD 3.5 Large</span><span class="meta">scored &middot; 8.2 MB</span></a>
       <a class="row" href="pilot_methods_sd35-medium.html"><span class="name">SD 3.5 Medium</span><span class="meta">scored &middot; 7.0 MB</span></a>
-      <a class="row" href="pilot_methods_qwen-image-2512.html"><span class="name">Qwen-Image 2512</span><span class="meta off">images only &middot; 4.5 MB</span></a>
     </div>
+    <!-- Qwen-Image 2512 is withheld: its CADS column is broken (the conditioning is
+         destroyed rather than annealed, so those four samples are noise, not images).
+         The other three methods are fine. Republish with
+         `python analysis/publish_viz.py` and restore this row once CADS is fixed. -->
   </section>
 
   <section>
@@ -122,8 +125,7 @@
 
   <p class="note">Each gallery shows 14 prompts &times; 4 methods &times; 4 samples at 512&nbsp;px.
   Rater identifiers are replaced with <code>R01</code>&ndash;<code>R11</code>.
-  Qwen-Image 2512 has stimuli but has not been through the metric runs, so its cards
-  carry no numbers.</p>
+  Qwen-Image 2512 is not listed: its CADS samples are being regenerated.</p>
 </main>
 </body>
 </html>
