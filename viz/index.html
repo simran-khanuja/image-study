@@ -39,6 +39,20 @@
   .note{color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:1.25rem;}
   code{font:.85em ui-monospace,SFMono-Regular,Menlo,monospace;
        background:var(--accent-soft);padding:.1em .35em;border-radius:4px;}
+  .meta.off{opacity:.7;font-style:italic;}
+  dl.metrics{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:8px;
+             padding:1rem 1.15rem;display:grid;grid-template-columns:auto 1fr;
+             gap:.55rem 1rem;align-items:baseline;}
+  dl.metrics dt{font:.85em ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;
+                color:var(--accent);white-space:nowrap;}
+  dl.metrics dd{margin:0;font-size:.92rem;color:var(--muted);text-wrap:pretty;}
+  dl.metrics dd b{color:var(--ink);font-weight:600;}
+  /* One column on narrow screens: the monospace term and its sentence both need room,
+     and a 2-column grid collapses the description to a few words per line on a phone. */
+  @media (max-width:34rem){
+    dl.metrics{grid-template-columns:1fr;gap:.2rem;}
+    dl.metrics dd{margin-bottom:.6rem;}
+  }
 </style>
 </head>
 <body>
@@ -46,18 +60,57 @@
   <div>
     <h1>Pilot Phase B — axis-free diversity methods</h1>
     <p class="lede">Static views of the pilot run: what four generation methods produced
-    for the same 14 prompts, and what raters said was missing from each image set.</p>
+    for the same 14 prompts, what raters said was missing from each image set, and how
+    four diversity metrics score them on the axis the raters actually asked for.</p>
   </div>
 
   <section>
     <h2>Method galleries — one page per model</h2>
     <div class="list">
-      <a class="row" href="pilot_methods_flux1-dev.html"><span class="name">FLUX.1 dev</span><span class="meta">5.7 MB</span></a>
-      <a class="row" href="pilot_methods_flux2klein-base-9b.html"><span class="name">FLUX.2 Klein base 9B</span><span class="meta">5.5 MB</span></a>
-      <a class="row" href="pilot_methods_qwen-image-2512.html"><span class="name">Qwen-Image 2512</span><span class="meta">4.6 MB</span></a>
-      <a class="row" href="pilot_methods_sd35-large.html"><span class="name">SD 3.5 Large</span><span class="meta">8.5 MB</span></a>
-      <a class="row" href="pilot_methods_sd35-medium.html"><span class="name">SD 3.5 Medium</span><span class="meta">7.2 MB</span></a>
+      <a class="row" href="pilot_methods_flux1-dev.html"><span class="name">FLUX.1 dev</span><span class="meta">scored &middot; 5.6 MB</span></a>
+      <a class="row" href="pilot_methods_flux2klein-base-9b.html"><span class="name">FLUX.2 Klein base 9B</span><span class="meta">scored &middot; 5.4 MB</span></a>
+      <a class="row" href="pilot_methods_sd35-large.html"><span class="name">SD 3.5 Large</span><span class="meta">scored &middot; 8.2 MB</span></a>
+      <a class="row" href="pilot_methods_sd35-medium.html"><span class="name">SD 3.5 Medium</span><span class="meta">scored &middot; 7.0 MB</span></a>
+      <a class="row" href="pilot_methods_qwen-image-2512.html"><span class="name">Qwen-Image 2512</span><span class="meta off">images only &middot; 4.5 MB</span></a>
     </div>
+  </section>
+
+  <section>
+    <h2>What the numbers under each grid mean</h2>
+    <dl class="metrics">
+      <dt>capVendi</dt>
+      <dd>Caption&ndash;Vendi. A VLM describes each image <i>on this prompt's own human
+      axis</i>, and the Vendi score over those descriptions says how many distinct
+      answers there effectively were (1&ndash;4).</dd>
+
+      <dt>gridScore</dt>
+      <dd>A VLM looks at the 2&times;2 grid and rates 1&ndash;5 how varied it is on that
+      same axis, scored by expected value rather than the top choice.</dd>
+
+      <dt>TPIPS</dt>
+      <dd>Text-conditioned perceptual distance on that axis (0&ndash;1, higher = more
+      varied). The axis phrase enters the image encoder itself, so unlike the two above
+      it never passes through generated language.</dd>
+
+      <dt>TPIPS/o</dt>
+      <dd>The same distance divided by the <i>unconditioned</i> distance between the same
+      four images &mdash; the <b>share</b> of a method's diversity that landed on the
+      requested axis, rather than how much there was. This is the one worth reading: a
+      method can raise <code>TPIPS</code> while lowering <code>TPIPS/o</code>, which means
+      it bought variety somewhere nobody asked for. It sits below 1 for every method
+      (conditioning on one axis always leaves fewer ways to differ), so compare against
+      <code>vanilla</code>, not against 1.</dd>
+
+      <dt>DINO</dt>
+      <dd>DINOv2&ndash;Vendi &mdash; axis-<i>blind</i> diversity, included as the contrast.
+      Where it disagrees with the axis-aware three is the interesting part.</dd>
+    </dl>
+    <p class="note" style="border:0;padding-top:.9rem">Under each grid the small figure is
+    the change against <code>vanilla</code> on the <i>same</i> prompt and model, which is
+    the only comparison that means anything at single-prompt granularity. Pooled over all
+    four scored models, <code>prompt_expand</code> is the one method that raises the axis
+    share (about +10% over vanilla); <code>cads</code> and <code>group_inference</code>
+    raise raw diversity but lower the share.</p>
   </section>
 
   <section>
@@ -68,7 +121,9 @@
   </section>
 
   <p class="note">Each gallery shows 14 prompts &times; 4 methods &times; 4 samples at 512&nbsp;px.
-  Rater identifiers are replaced with <code>R01</code>&ndash;<code>R11</code>.</p>
+  Rater identifiers are replaced with <code>R01</code>&ndash;<code>R11</code>.
+  Qwen-Image 2512 has stimuli but has not been through the metric runs, so its cards
+  carry no numbers.</p>
 </main>
 </body>
 </html>
